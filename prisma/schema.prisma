@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Video {
+  id        String       @id @default(uuid())
+  filePath  String
+  status    Status       @default(PENDING)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  annotations Annotation[]
+}
+
+model Annotation {
+  id          Int      @id @default(autoincrement())
+  video       Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  videoId     String
+  frameNumber Int
+  x           Float
+  y           Float
+  width       Float
+  height      Float
+  type        Type
+}
+
+enum Status {
+  PENDING
+  PROCESSING
+  COMPLETE
+  FAILED
+}
+
+enum Type {
+  face
+  license_plate
+}
