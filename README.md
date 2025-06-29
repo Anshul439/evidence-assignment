@@ -36,7 +36,7 @@
 
 2. **Start PostgreSQL and Redis with Docker Compose**
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 3. **Environment configuration**
